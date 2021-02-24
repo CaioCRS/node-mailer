@@ -4,7 +4,33 @@ const pdf = require('html-pdf');
 
 function getBase64FromHtml(html){
     return new Promise((resolve, reject) => {
-        pdf.create(html).toBuffer(function (err, buffer) {
+
+        let options = { 
+            format: 'A4',
+            border: {
+                top: '0',            // default is 0, units: mm, cm, in, px
+                right: '15px',
+                bottom: '0',
+                left: '15px'
+            },
+            quality: '100', 
+            dpi: 300,
+            paginationOffset: 1,
+            header: {
+                height: '35px',
+                contents: {
+                    default: '<strong style="float: right;">página {{page}} de {{pages}}</strong>'
+                }
+            },
+            footer: {
+                height: '35px',
+                contents: {
+                    default: '<strong style="float: right; ">página {{page}} de {{pages}}</strong>'
+                }
+            }
+        };
+
+        pdf.create(html, options).toBuffer(function (err, buffer) {
             if (err){
                 reject(null);
             }else{
@@ -24,7 +50,7 @@ async function EnviaEmail(mail, callback) {
         to: mail.mailTo,
         from: mail.mailFrom,
         subject: mail.subject,
-        text: 'teste',
+        text: ' ',
         html: mail.text,
         attachments: [{
                 filename: `contrato.pdf`,
