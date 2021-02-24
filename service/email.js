@@ -5,6 +5,7 @@ const pdf = require('html-pdf');
 function getBase64FromHtml(html){
     return new Promise((resolve, reject) => {
 
+
         let options = { 
             format: 'A4',
             border: {
@@ -29,6 +30,7 @@ function getBase64FromHtml(html){
                 }
             }
         };
+        
 
         pdf.create(html, options).toBuffer(function (err, buffer) {
             if (err){
