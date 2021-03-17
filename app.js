@@ -6,6 +6,7 @@ require('dotenv').config();
 // const rotaLogin = require('./routes/login');
 const rotaEmail = require('./routes/email');
 const rotaRecuperaSenha = require('./routes/recupera-senha');
+const rotaEmailSmtp = require('./routes/email-smtp');
 
 const swaggerUi = require('swagger-ui-express');
 const security = require('./utils/security');
@@ -47,7 +48,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Inicia verificação de Token
 //app.use(security.ValidaToken)
 // Rota de e-mail deverá ser descomentada somente para testes de envio
+
 app.use('/email', rotaEmail);
 app.use('/recupera-senha', rotaRecuperaSenha);
+app.use('/email-smtp', rotaEmailSmtp);
 
 module.exports = app;
