@@ -100,6 +100,7 @@ async function EnviaEmailRecuperarSenha(mail, callback) {
     });
 };
 
+
 async function EnviaEmailSmtp(mail, callback) {
 
    var confEnvio = {
@@ -155,4 +156,52 @@ async function EnviaEmailSmtp(mail, callback) {
     });
 };
 
-module.exports = { EnviaEmailRecuperarSenha, EnviaEmailSmtp }
+
+async function EnviaEmailSmtpTest(mail, callback) {
+
+    var confEnvio = {
+         host: mail.host,
+         port: mail.port,
+         secure: mail.secure, // use TLS
+         auth: {
+             user: mail.userName,
+             pass: mail.pass
+         }
+     }
+ 
+     var transporter = nodemailer.createTransport(confEnvio);
+ 
+     // verify connection configuration
+     transporter.verify(function (error, success) {
+         if (error) {
+             console.log("obj transporter",confEnvio);
+             console.log("erro no transporter!!!");
+             console.log(error);
+         } else {
+             console.log("Server is ready to take our messages");
+         }
+     });
+ 
+     // let base64data = await getBase64FromHtml(mail.htmlAttachment);
+ 
+     // sgMail.setApiKey(mail.apiKey);
+ 
+     const msg = {
+         to: mail.mailTo,
+         from: mail.mailFrom,
+         subject: mail.subject,
+         text: ' ',
+         html: mail.text
+     }
+ 
+     transporter.sendMail(msg).then(() => {
+         callback(enumUtils.httpStatusCode.ok, 'E-mail enviado com sucesso');
+     }).catch((error) => {
+         console.error('Erro ao enviar via smtp');
+         console.error(error);
+         console.log(error.response.body);
+         callback(enumUtils.httpStatusCode.internalServerError, 'Erro ao enviar e-mail');
+     });
+ };
+
+module.exports = { EnviaEmailRecuperarSenha, EnviaEmailSmtp, EnviaEmailSmtpTest }

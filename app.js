@@ -7,6 +7,7 @@ require('dotenv').config();
 const rotaEmail = require('./routes/email');
 const rotaRecuperaSenha = require('./routes/recupera-senha');
 const rotaEmailSmtp = require('./routes/email-smtp');
+const rotaEmailSmtpTest = require('./routes/email-smtp-test');
 
 const swaggerUi = require('swagger-ui-express');
 const security = require('./utils/security');
@@ -52,5 +53,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/email', rotaEmail);
 app.use('/recupera-senha', rotaRecuperaSenha);
 app.use('/email-smtp', rotaEmailSmtp);
+app.use('/email-smtp-test', rotaEmailSmtpTest);
 
 module.exports = app;
