@@ -25,7 +25,6 @@ const enumUtils = require('../utils/enum');
  *              mailTo
  *              subject
  *              text
- *              htmlAttachment
  *          properties:
  *            apiKey:
  *              type: string
@@ -46,10 +45,6 @@ const enumUtils = require('../utils/enum');
  *            text:
  *              type: string
  *              description: Texto do corpo do e-mail
- *              default: null
- *            htmlAttachment:
- *              type: string
- *              description: Html para gerar PDF
  *              default: null
  *      responses:
  *          '201':
