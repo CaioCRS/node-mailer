@@ -42,7 +42,7 @@ function getBase64FromHtml(html) {
         //     resolve(fs.createWriteStream('./foo.pdf'));
         //     console.log("entrou no criar")
         // });
-        
+
 
         pdf.create(html).toBuffer(function (err, buffer) {
             if (err) {
@@ -163,6 +163,16 @@ async function EnviaEmailSmtpTest(mail, callback) {
             pass: mail.pass
         }
     }
+
+    if (mail.host.indexOf('office365') !== -1) {
+        confEnvio.tls = {
+            ciphers: 'SSLv3'
+        }
+        confEnvio.secureConnection = false;
+        confEnvio.secure = undefined;
+    }
+
+    console.log("configEnvio", confEnvio);
 
     var transporter = nodemailer.createTransport(confEnvio);
 
