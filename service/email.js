@@ -119,6 +119,14 @@ async function EnviaEmailSmtp(mail, callback) {
         }
     }
 
+    if (mail.host.indexOf('office365') !== -1) {
+        confEnvio.tls = {
+            ciphers: 'SSLv3'
+        }
+        confEnvio.secureConnection = false;
+        confEnvio.secure = undefined;
+    }
+
     var transporter = nodemailer.createTransport(confEnvio);
 
     // verify connection configuration
